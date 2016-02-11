@@ -15,16 +15,29 @@ ColorEdit::ColorEdit()
       focus_placeholder_color_(0x00000000),
       focus_bg_color_(0x00000000),
       bg_brush_(),
+      border_brush_(),
       focus_bg_brush_(),
+      focus_border_brush_(),
+      border_width_(0),
       margin_(),
       paint_rect_(),
-      paint_placeholder_rect_() {
+      paint_placeholder_rect_(),
+      paint_rgn_() {
 }
 
 
 ColorEdit::~ColorEdit() {
+  if (paint_rgn_.GetSafeHandle()) {
+    paint_rgn_.DeleteObject();
+  }
+  if (focus_border_brush_.GetSafeHandle()) {
+    focus_border_brush_.DeleteObject();
+  }
   if (focus_bg_brush_.GetSafeHandle()) {
     focus_bg_brush_.DeleteObject();
+  }
+  if (border_brush_.GetSafeHandle()) {
+    border_brush_.DeleteObject();
   }
   if (bg_brush_.GetSafeHandle()) {
     bg_brush_.DeleteObject();
@@ -46,9 +59,12 @@ BOOL ColorEdit::CreateEdit(UINT id,
                            COLORREF text_color,
                            COLORREF placeholder_color,
                            COLORREF bg_color,
+                           COLORREF border_color,
                            COLORREF focus_text_color,
                            COLORREF focus_placeholder_color,
                            COLORREF focus_bg_color,
+                           COLORREF focus_border_color,
+                           UINT border_width,
                            LONG left_margin,
                            LONG right_margin) {
   // create
@@ -96,11 +112,16 @@ BOOL ColorEdit::CreateEdit(UINT id,
     focus_bg_color_ = focus_bg_color;
 
     bg_brush_.CreateSolidBrush(bg_color_);
+    border_brush_.CreateSolidBrush(border_color);
     focus_bg_brush_.CreateSolidBrush(focus_bg_color_);
+    focus_border_brush_.CreateSolidBrush(focus_border_color);
   }
 
   // margin
   {
+    // border
+    border_width_ = border_width;
+
     // margin width
     margin_.left = left_margin;
     margin_.right = right_margin;
@@ -119,6 +140,7 @@ BOOL ColorEdit::CreateEdit(UINT id,
                                     0,
                                     sz.cx - margin_.right,
                                     text_height);
+    paint_rgn_.CreateRectRgnIndirect(paint_rect_);
   }
 
   //
@@ -222,7 +244,9 @@ void ColorEdit::OnNcCalcSize(BOOL /*bCalcValidRects*/,
   Default();
 
   RECT *rect = &lpncsp->rgrc[0];
+  rect->left += border_width_;
   rect->top += margin_.top;
+  rect->right -= border_width_;
   rect->bottom -= margin_.bottom;
 }
 
@@ -232,12 +256,16 @@ void ColorEdit::OnNcPaint() {
 
   CWindowDC dc(this);
   CBrush *bg_brush = NULL;
+  CBrush *border_brush = NULL;
   if (IsFocused()) {
     bg_brush = &focus_bg_brush_;
+    border_brush = &focus_border_brush_;
   } else {
     bg_brush = &bg_brush_;
+    border_brush = &border_brush_;
   }
   dc.FillRect(paint_rect_, bg_brush);
+  dc.FrameRgn(&paint_rgn_, border_brush, border_width_, border_width_);
 }
 
 

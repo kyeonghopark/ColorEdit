@@ -21,9 +21,12 @@ class ColorEdit : public CEdit {
                   COLORREF text_color,
                   COLORREF placeholder_color,
                   COLORREF bg_color,
+                  COLORREF border_color,
                   COLORREF focus_text_color,
                   COLORREF focus_placeholder_color,
                   COLORREF focus_bg_color,
+                  COLORREF focus_border_color,
+                  UINT border_width,
                   LONG left_margin,
                   LONG right_margin);
 
@@ -57,9 +60,13 @@ class ColorEdit : public CEdit {
   COLORREF focus_placeholder_color_;
   COLORREF focus_bg_color_;
   CBrush bg_brush_;
+  CBrush border_brush_;
   CBrush focus_bg_brush_;
+  CBrush focus_border_brush_;
 
+  UINT border_width_;
   CRect margin_;
   CRect paint_rect_;
   CRect paint_placeholder_rect_;
+  CRgn paint_rgn_;
 };

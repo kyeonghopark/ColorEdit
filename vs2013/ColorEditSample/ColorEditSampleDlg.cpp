@@ -52,10 +52,13 @@ BOOL CColorEditSampleDlg::OnInitDialog() {
   COLORREF text_color(RGB(0, 0, 128));
   COLORREF placeholder_color(RGB(128, 0, 0));
   COLORREF bg_color(RGB(64, 128, 128));
+  COLORREF border_color(RGB(139, 87, 66));
   COLORREF focus_text_color(RGB(0, 64, 255));
   COLORREF focus_placeholder_color(RGB(255, 64, 0));
   COLORREF focus_bg_color(RGB(128, 255, 255));
+  COLORREF focus_border_color(RGB(139, 69, 0));
 
+  UINT border_width = 10;
   LONG left_margin = 10;
   LONG right_margin = 10;
 
@@ -71,9 +74,12 @@ BOOL CColorEditSampleDlg::OnInitDialog() {
                       text_color,
                       placeholder_color,
                       bg_color,
+                      border_color,
                       focus_text_color,
                       focus_placeholder_color,
                       focus_bg_color,
+                      focus_border_color,
+                      border_width,
                       left_margin,
                       right_margin);
 
@@ -89,9 +95,12 @@ BOOL CColorEditSampleDlg::OnInitDialog() {
                       text_color,
                       placeholder_color,
                       bg_color,
+                      border_color,
                       focus_text_color,
                       focus_placeholder_color,
                       focus_bg_color,
+                      focus_border_color,
+                      border_width,
                       left_margin,
                       right_margin);
 
