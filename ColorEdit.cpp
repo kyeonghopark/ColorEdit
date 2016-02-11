@@ -231,13 +231,13 @@ void ColorEdit::OnNcPaint() {
   Default();
 
   CWindowDC dc(this);
-  CBrush *brush = NULL;
+  CBrush *bg_brush = NULL;
   if (IsFocused()) {
-    brush = &focus_bg_brush_;
+    bg_brush = &focus_bg_brush_;
   } else {
-    brush = &bg_brush_;
+    bg_brush = &bg_brush_;
   }
-  dc.FillRect(paint_rect_, brush);
+  dc.FillRect(paint_rect_, bg_brush);
 }
 
 
