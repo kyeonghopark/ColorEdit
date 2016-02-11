@@ -42,10 +42,10 @@ class ColorEdit : public CEdit {
   afx_msg LRESULT OnNcHitTest(CPoint point);
 
  private:
-   bool IsFocused() const;
-   bool ShowsPlaceholder() const;
+  bool IsFocused() const;
+  bool ShowsPlaceholder() const;
 
-   void InvalidateAll();
+  void InvalidateAll();
 
   CString placeholder_;
   CFont font_;
