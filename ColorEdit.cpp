@@ -236,7 +236,7 @@ void ColorEdit::OnNcPaint() {
 }
 
 
-LRESULT ColorEdit::OnNcHitTest(CPoint point) {
+LRESULT ColorEdit::OnNcHitTest(CPoint /*point*/) {
   return HTCLIENT;
 }
 
