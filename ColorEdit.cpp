@@ -184,7 +184,7 @@ HBRUSH ColorEdit::CtlColor(CDC* pDC, UINT /*nCtlColor*/) {
 
   pDC->SetTextColor(text_color);
   pDC->SetBkColor(bg_color);
-  return (HBRUSH) bg_brush;
+  return (HBRUSH) bg_brush->GetSafeHandle();
 }
 
 
